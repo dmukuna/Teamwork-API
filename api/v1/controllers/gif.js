@@ -112,6 +112,69 @@ const getGifsController = (req, res, next) => {
     });
 };
 
+const getGifController = (req, res, next) => {
+  if (!req.params.gifId || req.params.gifId === '' || typeof (parseInt(req.params.gifId, 10)) !== 'number') {
+    res.status(400).json({
+      status: 'error',
+      Error: 'Invalid request',
+    });
+  } else {
+    const paramId = parseInt(req.params.gifId, 10);
+
+    findOneGif([paramId])
+      .then((row) => {
+        const {
+          id, title, gifurl, gifpublicid, createdon, authorid,
+        } = row;
+        const gifId = id;
+        const gifCreatedOn = createdon;
+        const gifTitle = title;
+        const gifAuthorId = authorid;
+
+        findGifComments([paramId])
+          .then((rows) => {
+            const commentArr = [];
+
+            rows.forEach((commentRow) => {
+              const { comment } = commentRow;
+              const gifComment = comment;
+              const gifCommentAuthorId = commentRow.authorid;
+              const values = {
+                commentId: commentRow.id,
+                comment: gifComment,
+                CommentAuthorId: gifCommentAuthorId,
+              };
+              commentArr.push(values);
+            });
+            res.status(200).json({
+              status: 'success',
+              data: {
+                Id: gifId,
+                createdOn: gifCreatedOn,
+                title: gifTitle,
+                imageURL: gifurl,
+                PublicId: gifpublicid,
+                authorId: gifAuthorId,
+                comments: commentArr,
+              },
+            });
+          })
+          .catch(() => {
+            res.status(500).json({
+              status: 'error',
+              error: 'Did not get GIF comment rows',
+            });
+          });
+      })
+      .catch(() => {
+        res.status(500).json({
+          status: 'error',
+          Error: 'Did not get gif row',
+        });
+      });
+  }
+};
+
 export {
   createGifController, getGifsController, getGifController, deleteGifController,
 };
