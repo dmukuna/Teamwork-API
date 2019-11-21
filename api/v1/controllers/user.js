@@ -55,6 +55,50 @@ const signUp = (req, res, next) => {
   }
 };
 
+const login = (req, res, next) => {
+  const { email, password } = req.body;
 
+  if (!email || !password || email === '' || password === '') {
+    res.status(400).json({
+      status: 'error',
+      error: 'Email and password fields are required',
+    });
+  } else {
+    const cleanedEmail = email.trim();
+    findOne([cleanedEmail])
+      .then((row) => {
+        const {
+          id, hashedpassword, jobrole,
+        } = row;
+        const verifyPwd = comparePassword(password.trim(), hashedpassword);
+        if (!verifyPwd) {
+          res.status(400).json({
+            status: 'error',
+            error: 'Incorrect password',
+          });
+        } else {
+          const uJobrole = jobrole.toUpperCase();
+          const userObj = {
+            sub: id,
+            role: uJobrole,
+          };
+          const tokenValue = generateToken(userObj);
+          res.status(200).json({
+            status: 'success',
+            data: {
+              token: tokenValue,
+              UserId: id,
+            },
+          });
+        }
+      })
+      .catch(() => {
+        res.status(400).json({
+          status: 'error',
+          error: 'Did not get user',
+        });
+      });
+  }
+};
 
-export { signUp };
+export { signUp, login };
