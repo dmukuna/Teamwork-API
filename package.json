@@ -4,11 +4,14 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "start": "nodemon --exec babel-node server.js",
     "dev_win": "set NODE_ENV=development&&npm start",
     "dev_unix": "NODE_ENV=development npm start",
     "prod_win": "set NODE_ENV=production&&npm start",
     "prod_unix": "NODE_ENV=production npm start",
-    "start": "nodemon --exec babel-node server.js"
+    "start-test": "nyc --require @babel/register  mocha ./api/v1/tests/*.js",
+    "test": "NODE_ENV=test&&npm start_test",
+    "build": "rm -rf ./build && babel -d ./build ./v1/api -s"
   },
   "repository": {
     "type": "git",
@@ -35,9 +38,13 @@
     "@babel/register": "^7.7.0",
     "@babel/runtime": "^7.7.2",
     "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",
-    "nodemon": "^2.0.0"
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.0",
+    "nyc": "^14.1.1"
   }
 }
