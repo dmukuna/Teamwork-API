@@ -1,5 +1,5 @@
-const users = {
-  user1 = {
+
+  const user1 = {
     "firstName": "Daniel",
     "lastName": "Mukuna",
     "email": "daniel@mukuna.com", 
@@ -8,8 +8,8 @@ const users = {
     "jobRole": "admin", 
     "department": "I.T", 
     "address": "Thika"
-  },
-  user2 = {
+  };
+  const  user2 = {
     "firstName": "Daniel",
     "lastName": "Mukuna",
     "email": "", 
@@ -18,8 +18,8 @@ const users = {
     "jobRole": "admin", 
     "department": "I.T", 
     "address": "Thika"
-  },
-  user3 = {
+  };
+  const user3 = {
     "firstName": "Daniel",
     "lastName": "Mukuna",
     "email": "danielmukuna", 
@@ -28,8 +28,8 @@ const users = {
     "jobRole": "admin", 
     "department": "I.T", 
     "address": "Thika"
-  },
-  user4 = {
+  };
+  const user4 = {
     "firstName": "Daniel",
     "lastName": "Mukuna",
     "email": "dan@mukuna.com", 
@@ -38,9 +38,9 @@ const users = {
     "jobRole": "admin", 
     "department": "I.T", 
     "address": "Thika"
-  },
+  };
 
-  user4 = {
+  const user5 = {
     "firstName": "Daniel",
     "lastName": "Mukuna",
     "email": "dan@mukuna.com", 
@@ -49,31 +49,30 @@ const users = {
     "jobRole": "admin", 
     "department": "I.T", 
     "address": "Thika"
-  },
+  };
 
-  user5 = {
+  const user6 = {
     "email": "daniel@mukuna.com",
     "password": "DANIEL12345"
-  },
+  };
 
-  user6 = {
+  const user7 = {
     "email": "daniel@mukuna.com",
     "password": "DANIEL1254345"
-  },
+  };
 
-  user7 = {
+  const user8 = {
     "email": "",
     "password": "DANIEL12345"
-  },
+  };
 
-  user8 = {
+  const user9 = {
     "email": "daniel.mukunacom",
     "password": "DANIEL1254345"
-  },
-  user9 = {
+  };
+  const user10 = {
     "email": "daniel.mukunacom",
     "password": ""
-  },
-};
+  };
 
-export default users;
+export default { user1, user2, user3, user4, user5, user6, user7, user8, user9 };

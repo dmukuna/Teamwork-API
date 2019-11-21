@@ -4,24 +4,24 @@ import 'chai/register-should';
 import { after } from 'mocha';
 import app from '../app';
 import users from '../seeders/user';
-import User from '../models/user';
+// import User from '../models/user';
 
-const { deleteAllUsers, save } = User;
+// const { deleteAllUsers, save } = User;
 
 const {
-  user1, user2, user3, user4, user5, user6, user7, user8, user9,
+  user1, user2, user3, user4, user5, user6, user7, user8, user9, user10,
 } = users;
 
 chai.use(chaiHttp);
 
 describe('auth', () => {
-  before(() => {
-    save([,,,,,,,,,,]);
-  });
+  // before(() => {
+  //   save([,,,,,,,,,,]);
+  // });
 
-  after(() => {
-    deleteAllUsers();
-  });
+  // after(() => {
+  //   deleteAllUsers();
+  // });
 
   describe('POST /api/v1/auth/create-user', () => {
     it('should create a new user', () => {
