@@ -4,7 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev_win": "set NODE_ENV=development&&npm start",
+    "dev_unix": "NODE_ENV=development npm start",
+    "prod_win": "set NODE_ENV=production&&npm start",
+    "prod_unix": "NODE_ENV=production npm start",
+    "start": "nodemon --exec babel-node server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +19,25 @@
   "bugs": {
     "url": "https://github.com/dmukuna/Teamwork-API/issues"
   },
-  "homepage": "https://github.com/dmukuna/Teamwork-API#readme"
+  "homepage": "https://github.com/dmukuna/Teamwork-API#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/node": "^7.7.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/register": "^7.7.0",
+    "@babel/runtime": "^7.7.2",
+    "babel-loader": "^8.0.6",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "nodemon": "^2.0.0"
+  }
 }
