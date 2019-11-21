@@ -72,6 +72,46 @@ const createGifController = (req, res, next) => {
   }
 };
 
+const getGifsController = (req, res, next) => {
+  findAllGifs()
+    .then((rows) => {
+      if (rows.length === 0) {
+        res.status(400).json({
+          status: 'error',
+          Error: 'There is no GIF post yet',
+        });
+      }
+      const gifArr = [];
+      rows.forEach((g) => {
+        const {
+          id, title, gifurl, gifpublicid, createdon, authorid,
+        } = g;
+        const gifCreatedOn = createdon;
+        const gifTitle = title;
+        const gifAuthorId = authorid;
+        const values = {
+          gifId: id,
+          createdOn: gifCreatedOn,
+          title: gifTitle,
+          imageURL: gifurl,
+          PublicId: gifpublicid,
+          authorId: gifAuthorId,
+        };
+        gifArr.push(values);
+      });
+      res.status(200).json({
+        status: 'success',
+        data: gifArr,
+      });
+    })
+    .catch(() => {
+      res.status(500).json({
+        status: 'error',
+        error: 'Did not get GIF image rows',
+      });
+    });
+};
+
 export {
   createGifController, getGifsController, getGifController, deleteGifController,
 };
