@@ -175,6 +175,51 @@ const getGifController = (req, res, next) => {
   }
 };
 
+const deleteGifController = (req, res, next) => {
+  if (!req.params.gifId || req.params.gifId === '' || typeof (parseInt(req.params.gifId, 10)) !== 'number') {
+    res.status(400).json({
+      status: 'error',
+      Error: 'Invalid request',
+    });
+  } else {
+    const idParam = parseInt(req.params.gifId, 10);
+    deleteGif([idParam])
+      .then((row) => {
+        const {
+          id, title, gifurl, gifpublicid, createdon, authorid,
+        } = row;
+        const gifCreatedOn = createdon;
+        const gifTitle = title;
+        const gifAuthorId = authorid;
+
+        cld.v2.uploader.destroy(gifpublicid)
+          .then(() => {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                message: 'GIF post successfully deleted',
+                gifId: id,
+                createdOn: gifCreatedOn,
+                title: gifTitle,
+                imageURL: gifurl,
+                PublicId: gifpublicid,
+                authorId: gifAuthorId,
+              },
+            });
+          })
+          .catch((err) => {
+            throw err;
+          });
+      })
+      .catch(() => {
+        res.status(500).json({
+          status: 'error',
+          Error: 'GIF delete was unsuccessful!',
+        });
+      });
+  }
+};
+
 export {
   createGifController, getGifsController, getGifController, deleteGifController,
 };
