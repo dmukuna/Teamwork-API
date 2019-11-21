@@ -10,7 +10,7 @@
     "prod_win": "set NODE_ENV=production&&npm start",
     "prod_unix": "NODE_ENV=production npm start",
     "test": "set NODE_ENV=test&&npm run start_test",
-    "start_test": "mocha  --require @babel/register",    
+    "start_test": "nyc mocha  --require @babel/register",    
     "build": "rm -rf ./build && babel -d ./build ./v1/api -s"
   },
   "repository": {
