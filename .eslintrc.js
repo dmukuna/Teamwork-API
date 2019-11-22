@@ -1,8 +1,0 @@
-export default {
-  "extends": "airbnb-base",
-  "env": {
-    "commonjs": true,
-    "node": true,
-    "mocha": true
-  },
-};
