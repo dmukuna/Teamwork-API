@@ -204,6 +204,47 @@ const updateArticleController = (req, res, next) => {
   }
 };
 
+const deleteArticleController = (req, res, next) => {
+  if (!req.params.articleId || req.params.articleId === '') {
+    res.status(400).json({
+      status: 'error',
+      Error: 'Invalid request',
+    });
+  } else {
+    const articleId = parseInt(req.params.articleId, 10);
+
+    deleteArticle([articleId])
+      .then((row) => {
+        const {
+          id, title, article, createdon, authorid,
+        } = row;
+
+        const articleTitle = title;
+        const articleText = article;
+        const articleCreatedOn = createdon;
+        const userId = authorid;
+
+        res.status(200).json({
+          status: 'success',
+          data: {
+            message: 'Article successfully deleted',
+            Id: id,
+            title: articleTitle,
+            article: articleText,
+            createdOn: articleCreatedOn,
+            authorId: userId,
+          },
+        });
+      })
+      .catch(() => {
+        res.status(500).json({
+          status: 'error',
+          Error: 'Failed to delete article',
+        });
+      });
+  }
+};
+
 export {
   createArticleController,
   getArticlesController,
