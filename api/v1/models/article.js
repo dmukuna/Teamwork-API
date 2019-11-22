@@ -56,7 +56,7 @@ const Article = {
   },
 
   deleteAllArticles() {
-    const queryText = 'DELETE FROM articles';
+    const queryText = 'DELETE FROM articles RETURNING *';
     const rows = query(queryText, [])
       .then((res) => res.rows)
       .catch((err) => {
