@@ -59,6 +59,48 @@ const createArticleController = (req, res, next) => {
   }
 };
 
+const getArticlesController = (req, res, next) => {
+  findAllArticles()
+    .then((rows) => {
+      if (rows.length === 0) {
+        res.status(400).json({
+          status: 'error',
+          Error: 'There is no Article post yet',
+        });
+      } else {
+        const articlesArr = [];
+        rows.forEach((a) => {
+          const {
+            id, title, article, createdOn, authorId,
+          } = a;
+          const articleId = id;
+          const articleTitle = title;
+          const articleText = article;
+          const articleCreatedOn = createdOn;
+
+          const values = {
+            id: articleId,
+            title: articleTitle,
+            article: articleText,
+            createdOn: articleCreatedOn,
+            userId: authorId,
+          };
+          articlesArr.push(values);
+        });
+        res.status(200).json({
+          status: 'success',
+          data: articlesArr,
+        });
+      }
+    })
+    .catch(() => {
+      res.status(500).json({
+        status: 'error',
+        Error: 'Did not get articles',
+      });
+    });
+};
+
 export {
   createArticleController,
   getArticlesController,
