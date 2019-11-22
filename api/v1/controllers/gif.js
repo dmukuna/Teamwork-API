@@ -1,7 +1,7 @@
 import moment from 'moment';
 import gf from '../models/gif';
 import comnt from '../models/comment';
-import cld from '../config/cloudinaryConfig';
+import cld from '../../../config/cloudinaryConfig';
 
 const {
   findOneGif, findAllGifs, saveGif, deleteGif,
