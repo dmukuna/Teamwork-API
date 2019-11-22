@@ -164,6 +164,46 @@ const getArticleController = (req, res, next) => {
   }
 };
 
+const updateArticleController = (req, res, next) => {
+  const checkFields = !req.params.articleId || !req.body.article || !req.body.title || req.params.articleId === ''
+  || req.body.article === '' || req.body.title === '';
+  if (checkFields) {
+    res.status(400).json({
+      status: 'error',
+      Error: 'Title and article fields are required',
+    });
+  } else {
+    const paramId = parseInt(req.params.articleId, 10);
+    updateArticle([req.body.title, req.body.article, paramId])
+      .then((row) => {
+        const {
+          id, title, article, createdon, authorid,
+        } = row;
+        const articleId = id;
+        const articleTitle = title;
+        const articleText = article;
+        const articleCreatedOn = createdon;
+
+        res.status(200).json({
+          status: 'success',
+          data: {
+            id: articleId,
+            title: articleTitle,
+            article: articleText,
+            createdOn: articleCreatedOn,
+            userId: authorid,
+          },
+        });
+      })
+      .catch(() => {
+        res.status(500).json({
+          status: 'error',
+          Error: 'Failed to update article',
+        });
+      });
+  }
+};
+
 export {
   createArticleController,
   getArticlesController,
