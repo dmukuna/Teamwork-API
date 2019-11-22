@@ -16,7 +16,14 @@ const normalizePort = (val) => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
+
+let port;
+if (process.env.NODE_ENV === 'test') {
+  port = normalizePort('3001');
+} else {
+  port = normalizePort(process.env.PORT || '3000');
+}
+
 app.set('port', port);
 
 const server = http.createServer(app);
@@ -49,3 +56,5 @@ server.on('listening', () => {
 });
 
 server.listen(port);
+
+export default server;
