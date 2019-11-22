@@ -7,7 +7,7 @@ import articleRoutes from './routes/article';
 import userRoutes from './routes/user';
 import feedRoutes from './routes/feed';
 import auth from './middleware/auth';
-import Role from './config/rolesConfig';
+import Role from '../../config/rolesConfig';
 
 
 const app = express();

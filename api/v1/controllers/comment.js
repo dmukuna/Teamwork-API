@@ -22,12 +22,7 @@ const createCommentController = (req, res, next) => {
     const authorId = req.user.sub;
     findAllComments()
       .then((rows) => {
-        let commentId;
-        if (rows.length === 0) {
-          commentId = 1;
-        } else {
-          commentId = rows[rows.length - 1].id + 1;
-        }
+        const commentId = Math.max(...rows.map(row => row.id + 1), 1);
 
         if (req.params.gifId) {
           const gifId = parseInt(req.params.gifId, 10);
@@ -51,7 +46,7 @@ const createCommentController = (req, res, next) => {
                 .catch(() => {
                   res.status(500).json({
                     status: 'error',
-                    error: 'Failed to save GIF comment',
+                    error: 'Failed to save comment',
                   });
                 });
             })

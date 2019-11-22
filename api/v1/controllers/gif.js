@@ -30,12 +30,8 @@ const createGifController = (req, res, next) => {
     const authorId = req.user.sub;
     findAllGifs()
       .then((rows) => {
-        let gifId;
-        if (rows.length === 0) {
-          gifId = 1;
-        } else {
-          gifId = rows[rows.length - 1].id + 1;
-        }
+        const gifId = Math.max(...rows.map(row => row.id + 1), 1);
+
         const values = [gifId, title, URL, gifPublicId, createdOn, authorId];
 
         saveGif(values)
@@ -66,7 +62,7 @@ const createGifController = (req, res, next) => {
       .catch(() => {
         res.status(500).json({
           status: 'error',
-          error: 'Did not get GIF image rows',
+          error: 'Failed to get GIF image rows',
         });
       });
   }
@@ -107,7 +103,7 @@ const getGifsController = (req, res, next) => {
     .catch(() => {
       res.status(500).json({
         status: 'error',
-        error: 'Did not get GIF image rows',
+        error: 'Failed to get GIF image rows',
       });
     });
 };
@@ -162,14 +158,14 @@ const getGifController = (req, res, next) => {
           .catch(() => {
             res.status(500).json({
               status: 'error',
-              error: 'Did not get GIF comment rows',
+              error: 'Failed to get GIF comment rows',
             });
           });
       })
       .catch(() => {
         res.status(500).json({
           status: 'error',
-          Error: 'Did not get gif row',
+          Error: 'Failed to get gif row',
         });
       });
   }
@@ -183,40 +179,49 @@ const deleteGifController = (req, res, next) => {
     });
   } else {
     const idParam = parseInt(req.params.gifId, 10);
-    deleteGif([idParam])
-      .then((row) => {
-        const {
-          id, title, gifurl, gifpublicid, createdon, authorid,
-        } = row;
-        const gifCreatedOn = createdon;
-        const gifTitle = title;
-        const gifAuthorId = authorid;
-
-        cld.v2.uploader.destroy(gifpublicid)
-          .then(() => {
-            res.status(200).json({
-              status: 'success',
-              data: {
-                message: 'GIF post successfully deleted',
-                gifId: id,
-                createdOn: gifCreatedOn,
-                title: gifTitle,
-                imageURL: gifurl,
-                PublicId: gifpublicid,
-                authorId: gifAuthorId,
-              },
+    findOneGif([idParam])
+      .then(() => {
+        deleteGif([idParam])
+        .then((row) => {
+          const {
+            id, title, gifurl, gifpublicid, createdon, authorid,
+          } = row;
+          const gifCreatedOn = createdon;
+          const gifTitle = title;
+          const gifAuthorId = authorid;
+  
+          cld.v2.uploader.destroy(gifpublicid)
+            .then(() => {
+              res.status(200).json({
+                status: 'success',
+                data: {
+                  message: 'GIF post successfully deleted',
+                  gifId: id,
+                  createdOn: gifCreatedOn,
+                  title: gifTitle,
+                  imageURL: gifurl,
+                  PublicId: gifpublicid,
+                  authorId: gifAuthorId,
+                },
+              });
+            })
+            .catch((err) => {
+              throw err;
             });
-          })
-          .catch((err) => {
-            throw err;
+        })
+        .catch(() => {
+          res.status(500).json({
+            status: 'error',
+            Error: 'Failed to delete GIF image post',
           });
+        });
       })
       .catch(() => {
         res.status(500).json({
           status: 'error',
-          Error: 'GIF delete was unsuccessful!',
+          Error: 'Failed to get GIF image post',
         });
-      });
+      })
   }
 };
 

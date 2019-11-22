@@ -3,9 +3,9 @@ import db from './index';
 const { query } = db;
 
 const Article = {
-  findOneArticle(value) {
-    const queryText = 'SELECT * FROM articles WHERE ID=$1';
-    const row = query(queryText, value)
+  findOneArticle(values) {
+    const queryText = 'SELECT * FROM articles WHERE id=$1';
+    const row = query(queryText, values)
       .then((res) => res.rows[0])
       .catch((err) => {
         throw err;
@@ -36,7 +36,7 @@ const Article = {
   saveArticle(values) {
     const queryText = `INSERT INTO
       articles (ID, title, article, createdOn, authorId)
-      VALUES ($1, $2, $3, $4, $5)`;
+      VALUES ($1, $2, $3, $4, $5) RETURNING *`;
     const row = query(queryText, values)
       .then((res) => res.rows[0])
       .catch((err) => {

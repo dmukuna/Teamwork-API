@@ -95,7 +95,7 @@ const login = (req, res, next) => {
       .catch(() => {
         res.status(400).json({
           status: 'error',
-          error: 'Did not get user',
+          error: 'Failed to get user',
         });
       });
   }
