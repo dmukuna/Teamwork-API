@@ -101,6 +101,69 @@ const getArticlesController = (req, res, next) => {
     });
 };
 
+const getArticleController = (req, res, next) => {
+  if (!req.params.articleId || req.params.articleId === '') {
+    res.status(400).json({
+      status: 'error',
+      Error: 'Invalid request',
+    });
+  } else {
+    const paramId = parseInt(req.params.articleId, 10);
+
+    findOneArticle([paramId])
+      .then((row) => {
+        const {
+          id, title, article, createdon, authorid,
+        } = row;
+        const articleId = id;
+        const articleTitle = title;
+        const articleText = article;
+        const articleCreatedOn = createdon;
+        const articleAuthorId = authorid;
+
+        findArticleComments([paramId])
+          .then((rows) => {
+            const commentArr = [];
+            rows.forEach((commentRow) => {
+              const { comment } = commentRow;
+              const commentText = comment;
+              const commentAuthorId = commentRow.authorid;
+
+              const values = {
+                commentId: commentRow.id,
+                comment: commentText,
+                authorId: commentAuthorId,
+              };
+              commentArr.push(values);
+            });
+            res.status(200).json({
+              status: 'success',
+              data: {
+                id: articleId,
+                createdOn: articleCreatedOn,
+                title: articleTitle,
+                article: articleText,
+                authorId: articleAuthorId,
+                comments: commentArr,
+              },
+            });
+          })
+          .catch(() => {
+            res.status(500).json({
+              status: 'error',
+              Error: 'Failed to get article comments',
+            });
+          });
+      })
+      .catch(() => {
+        res.status(500).json({
+          status: 'error',
+          Error: 'Failed to get article',
+        });
+      });
+  }
+};
+
 export {
   createArticleController,
   getArticlesController,
