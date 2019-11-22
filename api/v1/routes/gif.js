@@ -13,6 +13,6 @@ router.post('/', multerUploads, createGifController);
 router.get('/', getGifsController);
 router.get('/:gifId', getGifController);
 router.delete('/:gifId', deleteGifController);
-router.use('/:gifId/comments', auth([Role.Employee]), commentRoutes);
+router.use('/:gifId/comments', auth([Role.Employee, Role.Admin]), commentRoutes);
 
 export default router;

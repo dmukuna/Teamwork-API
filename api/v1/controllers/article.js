@@ -20,12 +20,8 @@ const createArticleController = (req, res, next) => {
         const { title, article } = req.body;
         const authorId = req.user.sub;
         const articleCreatedOn = moment().format('YYYY-MM-DD HH:mm:ss');
-        let articleId;
-        if (rows.length === 0) {
-          articleId = 1;
-        } else {
-          articleId = rows[rows.length - 1].id + 1;
-        }
+        const articleId = Math.max(...rows.map(row => row.id + 1), 1);
+
         const articleTitle = title;
 
         const values = [articleId, title, article, articleCreatedOn, authorId];
@@ -46,14 +42,14 @@ const createArticleController = (req, res, next) => {
           .catch(() => {
             res.status(500).json({
               status: 'error',
-              error: 'Did not post article',
+              error: 'Failed to save article',
             });
           });
       })
       .catch(() => {
         res.status(500).json({
           status: 'error',
-          Error: 'Did not get articles',
+          Error: 'Failed to get articles',
         });
       });
   }
@@ -96,7 +92,7 @@ const getArticlesController = (req, res, next) => {
     .catch(() => {
       res.status(500).json({
         status: 'error',
-        Error: 'Did not get articles',
+        Error: 'Failed to get articles',
       });
     });
 };
@@ -174,31 +170,40 @@ const updateArticleController = (req, res, next) => {
     });
   } else {
     const paramId = parseInt(req.params.articleId, 10);
-    updateArticle([req.body.title, req.body.article, paramId])
-      .then((row) => {
-        const {
-          id, title, article, createdon, authorid,
-        } = row;
-        const articleId = id;
-        const articleTitle = title;
-        const articleText = article;
-        const articleCreatedOn = createdon;
-
-        res.status(200).json({
-          status: 'success',
-          data: {
-            id: articleId,
-            title: articleTitle,
-            article: articleText,
-            createdOn: articleCreatedOn,
-            userId: authorid,
-          },
+    findOneArticle([paramId])
+      .then(() => {
+        updateArticle([req.body.title, req.body.article, paramId])
+        .then((row) => {
+          const {
+            id, title, article, createdon, authorid,
+          } = row;
+          const articleId = id;
+          const articleTitle = title;
+          const articleText = article;
+          const articleCreatedOn = createdon;
+  
+          res.status(200).json({
+            status: 'success',
+            data: {
+              id: articleId,
+              title: articleTitle,
+              article: articleText,
+              createdOn: articleCreatedOn,
+              userId: authorid,
+            },
+          });
+        })
+        .catch(() => {
+          res.status(500).json({
+            status: 'error',
+            Error: 'Failed to update article',
+          });
         });
       })
-      .catch(() => {
-        res.status(500).json({
+      .catch(() =>{
+        res.status(400).json({
           status: 'error',
-          Error: 'Failed to update article',
+          Error: 'Failed to get article',
         });
       });
   }
@@ -213,35 +218,44 @@ const deleteArticleController = (req, res, next) => {
   } else {
     const articleId = parseInt(req.params.articleId, 10);
 
-    deleteArticle([articleId])
-      .then((row) => {
-        const {
-          id, title, article, createdon, authorid,
-        } = row;
-
-        const articleTitle = title;
-        const articleText = article;
-        const articleCreatedOn = createdon;
-        const userId = authorid;
-
-        res.status(200).json({
-          status: 'success',
-          data: {
-            message: 'Article successfully deleted',
-            Id: id,
-            title: articleTitle,
-            article: articleText,
-            createdOn: articleCreatedOn,
-            authorId: userId,
-          },
+    findOneArticle([articleId])
+      .then(() => {
+        deleteArticle([articleId])
+        .then((row) => {
+          const {
+            id, title, article, createdon, authorid,
+          } = row;
+  
+          const articleTitle = title;
+          const articleText = article;
+          const articleCreatedOn = createdon;
+          const userId = authorid;
+  
+          res.status(200).json({
+            status: 'success',
+            data: {
+              message: 'Article successfully deleted',
+              Id: id,
+              title: articleTitle,
+              article: articleText,
+              createdOn: articleCreatedOn,
+              authorId: userId,
+            },
+          });
+        })
+        .catch(() => {
+          res.status(500).json({
+            status: 'error',
+            Error: 'Failed to delete article',
+          });
         });
       })
       .catch(() => {
-        res.status(500).json({
+        res.status(400).json({
           status: 'error',
-          Error: 'Failed to delete article',
+          Error: 'Failed to get article',
         });
-      });
+      })
   }
 };
 

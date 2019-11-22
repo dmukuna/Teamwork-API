@@ -34,7 +34,7 @@ const Comment = {
   },
 
   findGifComments(value) {
-    const queryText = 'SELECT * FROM comments WHERE gifId=$1';
+    const queryText = 'SELECT * FROM comments WHERE gifid=$1';
     const rows = query(queryText, value)
       .then((res) => res.rows)
       .catch((err) => {
@@ -45,10 +45,10 @@ const Comment = {
 
   saveGifComment(values) {
     const queryText = `INSERT INTO
-      comments (ID, comment, createdOn, authorId, gifId)
+      comments (id, comment, createdon, authorid, gifid)
       VALUES ($1, $2, $3, $4, $5)`;
     const row = query(queryText, values)
-      .then((res) => res.rows[0])
+      .then((res) => res)
       .catch((err) => {
         throw err;
       });
@@ -57,7 +57,7 @@ const Comment = {
 
   saveArticleComment(values) {
     const queryText = `INSERT INTO
-      comments (ID, comment, createdOn, authorId, articleId)
+      comments (id, comment, createdon, authorid, articleid)
       VALUES ($1, $2, $3, $4, $5)`;
     const row = query(queryText, values)
       .then((res) => res.rows[0])
