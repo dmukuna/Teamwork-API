@@ -24,7 +24,7 @@ const Article = {
   },
 
   updateArticle(values) {
-    const queryText = 'UPDATE articles SET article=$1 WHERE ID=$2 RETURNING *';
+    const queryText = 'UPDATE articles SET title=$1, article=$2 WHERE ID=$3 RETURNING *';
     const row = query(queryText, values)
       .then((res) => res.rows[0])
       .catch((err) => {
