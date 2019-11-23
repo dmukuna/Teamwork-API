@@ -1,7 +1,6 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import 'chai/register-should';
-import { after, before } from 'mocha';
 import dotenv from 'dotenv';
 import moment from 'moment';
 import uuidv1 from 'uuid/v1';

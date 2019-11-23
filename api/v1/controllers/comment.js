@@ -13,7 +13,7 @@ const createCommentController = (req, res, next) => {
   if (checkFields) {
     res.status(400).json({
       status: 'error',
-      Error: 'Invalid request',
+      error: 'Invalid request',
     });
   } else {
     const { comment } = req.body;

@@ -17,12 +17,7 @@ const normalizePort = (val) => {
   return false;
 };
 
-let port;
-if (process.env.NODE_ENV === 'test') {
-  port = normalizePort('3001');
-} else {
-  port = normalizePort(process.env.PORT || '3000');
-}
+const port = normalizePort(process.env.PORT || '3000');;
 
 app.set('port', port);
 
