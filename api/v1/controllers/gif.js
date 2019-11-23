@@ -28,6 +28,7 @@ const createGifController = (req, res, next) => {
     const gifPublicId = req.file.public_id;
     const createdOn = moment().format('YYYY-MM-DD HH:mm:ss');
     const authorId = req.user.sub;
+
     findAllGifs()
       .then((rows) => {
         const gifId = Math.max(...rows.map(row => row.id + 1), 1);

@@ -2,10 +2,15 @@ import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import 'chai/register-should';
 import uuidv1 from 'uuid/v1';
+import dotenv from 'dotenv';
 import server from '../../../server';
 import User from '../models/user';
 import helper from '../controllers/helper';
 import pool from '../../../config/dbConfig'
+
+dotenv.config();
+
+process.env.NODE_ENV = 'test';
 
 
 const { deleteAllUsers, save } = User;
@@ -47,7 +52,6 @@ describe('auth', () => {
       const res = await chai.request(server)
         .post('/api/v1/auth/create-user')
         .set('Authorization', tokent)
-        .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(user1);
         expect(res).to.have.status(201);
@@ -122,8 +126,7 @@ describe('auth', () => {
 
   });
 
-    
-
+  
   describe('POST /api/v1/auth/signin', () => {
     const id2 = uuidv1();
     before(async () => {
