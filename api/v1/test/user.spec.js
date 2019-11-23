@@ -6,7 +6,6 @@ import dotenv from 'dotenv';
 import server from '../../../server';
 import User from '../models/user';
 import helper from '../controllers/helper';
-import pool from '../../../config/dbConfig'
 
 dotenv.config();
 

@@ -12,7 +12,7 @@ const createArticleController = (req, res, next) => {
   if (checkFields) {
     res.status(400).json({
       status: 'error',
-      Error: 'Title and Article text are required',
+      error: 'Title and Article text are required',
     });
   } else {
     findAllArticles()
@@ -49,7 +49,7 @@ const createArticleController = (req, res, next) => {
       .catch(() => {
         res.status(500).json({
           status: 'error',
-          Error: 'Failed to get articles',
+          error: 'Failed to get articles',
         });
       });
   }
@@ -61,7 +61,7 @@ const getArticlesController = (req, res, next) => {
       if (rows.length === 0) {
         res.status(400).json({
           status: 'error',
-          Error: 'There is no Article post yet',
+          error: 'There is no Article post yet',
         });
       } else {
         const articlesArr = [];
@@ -92,7 +92,7 @@ const getArticlesController = (req, res, next) => {
     .catch(() => {
       res.status(500).json({
         status: 'error',
-        Error: 'Failed to get articles',
+        error: 'Failed to get articles',
       });
     });
 };
@@ -101,60 +101,67 @@ const getArticleController = (req, res, next) => {
   if (!req.params.articleId || req.params.articleId === '') {
     res.status(400).json({
       status: 'error',
-      Error: 'Invalid request',
+      error: 'Invalid request',
     });
   } else {
     const paramId = parseInt(req.params.articleId, 10);
 
     findOneArticle([paramId])
       .then((row) => {
-        const {
-          id, title, article, createdon, authorid,
-        } = row;
-        const articleId = id;
-        const articleTitle = title;
-        const articleText = article;
-        const articleCreatedOn = createdon;
-        const articleAuthorId = authorid;
-
-        findArticleComments([paramId])
-          .then((rows) => {
-            const commentArr = [];
-            rows.forEach((commentRow) => {
-              const { comment } = commentRow;
-              const commentText = comment;
-              const commentAuthorId = commentRow.authorid;
-
-              const values = {
-                commentId: commentRow.id,
-                comment: commentText,
-                authorId: commentAuthorId,
-              };
-              commentArr.push(values);
-            });
-            res.status(200).json({
-              status: 'success',
-              data: {
-                id: articleId,
-                createdOn: articleCreatedOn,
-                title: articleTitle,
-                article: articleText,
-                authorId: articleAuthorId,
-                comments: commentArr,
-              },
-            });
-          })
-          .catch(() => {
-            res.status(500).json({
-              status: 'error',
-              Error: 'Failed to get article comments',
-            });
+        if (row.length === 0){
+          res.status(400).json({
+            status: 'error',
+            error: 'Invalid request',
           });
+        } else {
+          const {
+            id, title, article, createdon, authorid,
+          } = row;
+          const articleId = id;
+          const articleTitle = title;
+          const articleText = article;
+          const articleCreatedOn = createdon;
+          const articleAuthorId = authorid;
+  
+          findArticleComments([paramId])
+            .then((rows) => {
+              const commentArr = [];
+              rows.forEach((commentRow) => {
+                const { comment } = commentRow;
+                const commentText = comment;
+                const commentAuthorId = commentRow.authorid;
+  
+                const values = {
+                  commentId: commentRow.id,
+                  comment: commentText,
+                  authorId: commentAuthorId,
+                };
+                commentArr.push(values);
+              });
+              res.status(200).json({
+                status: 'success',
+                data: {
+                  id: articleId,
+                  createdOn: articleCreatedOn,
+                  title: articleTitle,
+                  article: articleText,
+                  authorId: articleAuthorId,
+                  comments: commentArr,
+                },
+              });
+            })
+            .catch(() => {
+              res.status(500).json({
+                status: 'error',
+                error: 'Failed to get article comments',
+              });
+            });
+        }
       })
       .catch(() => {
         res.status(500).json({
           status: 'error',
-          Error: 'Failed to get article',
+          error: 'Failed to get article',
         });
       });
   }
@@ -166,13 +173,19 @@ const updateArticleController = (req, res, next) => {
   if (checkFields) {
     res.status(400).json({
       status: 'error',
-      Error: 'Title and article fields are required',
+      error: 'Title and article fields are required',
     });
   } else {
     const paramId = parseInt(req.params.articleId, 10);
     findOneArticle([paramId])
-      .then(() => {
-        updateArticle([req.body.title, req.body.article, paramId])
+      .then((row) => {
+        if (row.length === 0) {
+          res.status(400).json({
+            status: 'error',
+            error: 'Article does not exist',
+          });
+        } else {
+          updateArticle([req.body.title, req.body.article, paramId])
         .then((row) => {
           const {
             id, title, article, createdon, authorid,
@@ -182,7 +195,7 @@ const updateArticleController = (req, res, next) => {
           const articleText = article;
           const articleCreatedOn = createdon;
   
-          res.status(200).json({
+          res.status(201).json({
             status: 'success',
             data: {
               id: articleId,
@@ -196,14 +209,15 @@ const updateArticleController = (req, res, next) => {
         .catch(() => {
           res.status(500).json({
             status: 'error',
-            Error: 'Failed to update article',
+            error: 'Failed to update article',
           });
         });
+        }
       })
       .catch(() =>{
-        res.status(400).json({
+        res.status(500).json({
           status: 'error',
-          Error: 'Failed to get article',
+          error: 'Failed to get article',
         });
       });
   }
@@ -213,47 +227,52 @@ const deleteArticleController = (req, res, next) => {
   if (!req.params.articleId || req.params.articleId === '') {
     res.status(400).json({
       status: 'error',
-      Error: 'Invalid request',
+      error: 'Invalid request',
     });
   } else {
     const articleId = parseInt(req.params.articleId, 10);
 
     findOneArticle([articleId])
-      .then(() => {
-        deleteArticle([articleId])
-        .then((row) => {
-          const {
-            id, title, article, createdon, authorid,
-          } = row;
-  
-          const articleTitle = title;
-          const articleText = article;
-          const articleCreatedOn = createdon;
-          const userId = authorid;
-  
-          res.status(200).json({
-            status: 'success',
-            data: {
-              message: 'Article successfully deleted',
-              Id: id,
-              title: articleTitle,
-              article: articleText,
-              createdOn: articleCreatedOn,
-              authorId: userId,
-            },
-          });
-        })
-        .catch(() => {
-          res.status(500).json({
+      .then((row) => {
+        if (row.length === 0) {
+          res.status(400).json({
             status: 'error',
-            Error: 'Failed to delete article',
+            error: 'Invalid request',
           });
-        });
+        } else {deleteArticle([articleId])
+          .then((row) => {
+            const {
+              id, title, article, createdon, authorid,
+            } = row;
+    
+            const articleTitle = title;
+            const articleText = article;
+            const articleCreatedOn = createdon;
+            const userId = authorid;
+    
+            res.status(200).json({
+              status: 'success',
+              data: {
+                message: 'Article successfully deleted',
+                Id: id,
+                title: articleTitle,
+                article: articleText,
+                createdOn: articleCreatedOn,
+                authorId: userId,
+              },
+            });
+          })
+          .catch(() => {
+            res.status(500).json({
+              status: 'error',
+              error: 'Failed to delete article',
+            });
+          });}
       })
       .catch(() => {
-        res.status(400).json({
+        res.status(500).json({
           status: 'error',
-          Error: 'Failed to get article',
+          error: 'Failed to get article',
         });
       })
   }
