@@ -17,6 +17,9 @@ env:
   - DB_HOST_TEST=ec2-54-225-173-42.compute-1.amazonaws.com
   - DB_PORT_TEST=5432
   - DB_DATABASE_TEST=ddo2ssbhau003c
+  - CLOUDINARY_CLOUD_NAME=mukuna
+  - CLOUDINARY_API_KEY=133265748257957
+  - CLOUDINARY_API_SECRET=uXZx1YbXcdEK6yhcgXs1VxAHkUE
   
   - SECRET=teamwork-api-secret-key
 
