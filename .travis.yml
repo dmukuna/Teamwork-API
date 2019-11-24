@@ -1,0 +1,34 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - "node_modules"
+install:
+  - npm install
+services:
+  - postgresql
+addons:
+  hosts:
+  - localhost
+  - 127.0.0.1
+
+env:
+  global:
+  - NODE_ENV=test
+  - DB_USER_test=teamwork_user
+  - DB_PASSWORD_test=teamwork_password
+  - DB_HOST_test=localhost
+  - DB_PORT_test='5432'
+  - DB_DATABASE_test=teamwork_api_test
+  - SECRET=teamwork-api-secret-key
+
+before_script:
+  - psql -c 'create database teamwork_api_test;' -U postgres
+  - psql -c "CREATE USER teamwork_user WITH PASSWORD 'teamwork_password';" -U postgres
+  - psql -U teamwork_user -d teamwork_api_test -a -f ./init.sql
+  - npm run build
+script:
+  - npm test
+after_success:
+  - npm run coverage
