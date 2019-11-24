@@ -5,7 +5,7 @@ import {
 import commentRoutes from './comment';
 import multerUploads from '../middleware/multerConfig';
 import auth from '../middleware/auth';
-import Role from '../../../config/rolesConfig';
+import Role from '../config/rolesConfig';
 
 const router = Router();
 

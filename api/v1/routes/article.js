@@ -5,7 +5,7 @@ import {
 } from '../controllers/article';
 import commentRoutes from './comment';
 import auth from '../middleware/auth';
-import Role from '../../../config/rolesConfig';
+import Role from '../config/rolesConfig';
 
 const router = Router();
 

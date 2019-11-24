@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import 'chai/register-should';
 import uuidv1 from 'uuid/v1';
 import dotenv from 'dotenv';
-import server from '../../../server';
+import server from '../server';
 import User from '../models/user';
 import helper from '../controllers/helper';
 

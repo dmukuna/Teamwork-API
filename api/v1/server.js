@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import http from 'http';
 import dotenv from 'dotenv';
-import app from './api/v1/app';
+import app from './app';
 
 dotenv.config();
 

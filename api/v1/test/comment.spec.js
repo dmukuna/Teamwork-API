@@ -4,7 +4,7 @@ import 'chai/register-should';
 import dotenv from 'dotenv';
 import moment from 'moment';
 import uuidv1 from 'uuid/v1';
-import server from '../../../server';
+import server from '../server';
 import Gif from '../models/gif';
 import User from '../models/user';
 import Article from '../models/article';
