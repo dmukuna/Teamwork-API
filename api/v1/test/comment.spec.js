@@ -26,7 +26,7 @@ chai.use(chaiHttp);
 
 describe('comments', () => {
   const id1 = uuidv1();
-  const obj = generateToken({ sub: id1, role: 'ADMIN' });
+  const obj = generateToken({ sub: id1, role: 'EMPLOYEE' });
   const token = `Bearer ${obj}`;
   before(async () => {
     const articleTitle = 'First test title';
