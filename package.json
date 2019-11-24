@@ -6,12 +6,10 @@
   "scripts": {
     "start": "npm run prod_server && node ./build/server.js",
     "prod_server": "set NODE_ENV=production&&npm run build",
-
     "dev": "set NODE_ENV=development&&npm run dev_server",
     "dev_server": "nodemon --exec babel-node ./api/v1/server.js",
-
     "test": "mocha  --require @babel/register ./api/v1/test --timeout 30000 --exit",
-    "build": "rm -rf ./build && babel -d ./build ./api/v1 -s",
+    "build": "rmdir ./build && babel -d ./build ./api/v1 -s",
     "coverage": "nyc npm run test"
   },
   "repository": {
