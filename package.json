@@ -9,7 +9,7 @@
     "dev": "set NODE_ENV=development&&npm run dev_server",
     "dev_server": "nodemon --exec babel-node ./api/v1/server.js",
     "test": "mocha  --require @babel/register ./api/v1/test --timeout 30000 --exit",
-    "build": "rmdir ./build && babel -d ./build ./api/v1 -s",
+    "build": "DEL /F /Q /A .\\build && babel -d ./build ./api/v1 -s",
     "coverage": "nyc npm run test"
   },
   "repository": {
