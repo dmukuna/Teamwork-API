@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/dmukuna/Teamwork-API#readme",
   "dependencies": {
+    "@babel/runtime": "^7.7.4",
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.17.0",
@@ -45,7 +46,6 @@
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.7.1",
     "@babel/register": "^7.7.0",
-    "@babel/runtime": "^7.7.2",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
