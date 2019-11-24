@@ -19,8 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use('/api/v1/auth', userRoutes);
-app.use('/api/v1/articles', auth([Role.Employee, Role.Admin]), articleRoutes);
-app.use('/api/v1/gifs', auth([Role.Employee, Role.Admin]), gifRoutes);
-app.use('/api/v1/feed', auth([Role.Employee, Role.Admin]), feedRoutes);
+app.use('/api/v1/articles', auth([Role.Employee]), articleRoutes);
+app.use('/api/v1/gifs', auth([Role.Employee]), gifRoutes);
+app.use('/api/v1/feed', auth([Role.Employee]), feedRoutes);
 
 module.exports = app;

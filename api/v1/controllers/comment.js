@@ -35,6 +35,7 @@ const createCommentController = (req, res, next) => {
                   res.status(201).json({
                     status: 'success',
                     data: {
+                      id: commentId,
                       message: 'Comment successfully created',
                       createdOn: commentCreatedOn,
                       gifTitle: title,

@@ -14,6 +14,6 @@ router.get('/', getArticlesController);
 router.get('/:articleId', getArticleController);
 router.patch('/:articleId', updateArticleController);
 router.delete('/:articleId', deleteArticleController);
-router.use('/:articleId/comments', auth([Role.Employee, Role.Admin]), commentRoutes);
+router.use('/:articleId/comments', auth([Role.Employee]), commentRoutes);
 
 export default router;
