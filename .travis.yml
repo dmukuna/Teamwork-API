@@ -12,17 +12,10 @@ services:
 env:
   global:
   - NODE_ENV=test
-  - DB_USER_test=teamwork_user
-  - DB_PASSWORD_test=teamwork_password
-  - DB_HOST_test=localhost
-  - DB_PORT_test=5432
-  - DB_DATABASE_test=teamwork_api_test
+  - DATABASE_URL_TEST=postgres://utpwsugatpqjzn:03120a462667a671da3979385da1b5650ab8082d1319630013ec707eb7338ca5@ec2-54-225-173-42.compute-1.amazonaws.com:5432/ddo2ssbhau003c
   - SECRET=teamwork-api-secret-key
 
 before_script:
-  - psql -c 'create database teamwork_api_test;' -U postgres
-  - psql -c "CREATE USER teamwork_user WITH PASSWORD 'teamwork_password';" -U postgres
-  - psql -U teamwork_user -d teamwork_api_test -a -f ./init.sql
   - npm run build
 script:
   - npm test

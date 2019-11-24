@@ -12,7 +12,7 @@ if (isProduction) {
 } else if (isDevelopment) {
   conn = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE}`;
 } else {
-  conn = `postgresql://${process.env.DB_USER_TEST}:${process.env.DB_PASSWORD_TEST}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_DATABASE_TEST}`;
+  conn = process.env.DATABASE_URL_TEST;
 }
 
 const pool = new Pool({
