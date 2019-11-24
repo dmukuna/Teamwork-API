@@ -8,10 +8,6 @@ install:
   - npm install
 services:
   - postgresql
-addons:
-  hosts:
-  - localhost
-  - 127.0.0.1
 
 env:
   global:
@@ -19,7 +15,7 @@ env:
   - DB_USER_test=teamwork_user
   - DB_PASSWORD_test=teamwork_password
   - DB_HOST_test='127.0.0.1'
-  - DB_PORT_test='5432'
+  - DB_PORT_test='*'
   - DB_DATABASE_test=teamwork_api_test
   - SECRET=teamwork-api-secret-key
 
