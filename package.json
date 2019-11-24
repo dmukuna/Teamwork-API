@@ -10,7 +10,10 @@
     "dev_server": "nodemon --exec babel-node ./api/v1/server.js",
     "test": "mocha  --require @babel/register ./api/v1/test --timeout 30000 --exit",
     "build": "rm -rf ./build && babel -d ./build ./api/v1 -s",
-    "coverage": "nyc npm run test"
+    "generate-lcov": "nyc report --reporter=text-lcov > lcov.info",
+    "coveralls-coverage": "coveralls < lcov.info",
+    "codeclimate-coverage": "codeclimate-test-reporter < lcov.info",
+    "coverage": "nyc npm run test && npm run generate-lcov && npm run coveralls-coverage && npm run codeclimate-coverage"
   },
   "repository": {
     "type": "git",
@@ -49,6 +52,8 @@
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "codeclimate-test-reporter": "^0.5.1",
+    "coveralls": "^3.0.8",
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.18.2",

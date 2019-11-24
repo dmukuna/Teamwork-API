@@ -21,7 +21,7 @@ chai.use(chaiHttp);
 
 describe('Gifs', () => {
   const id1 = uuidv1();
-  const obj = generateToken({ sub: id1, role: 'ADMIN' });
+  const obj = generateToken({ sub: id1, role: 'EMPLOYEE' });
   const token = `Bearer ${obj}`;
   before(async () => {
     const gifTitle = 'First gif test value';

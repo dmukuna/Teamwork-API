@@ -1,1 +1,0 @@
-{"version":3,"sources":["../../api/v1/config/rolesConfig.js"],"names":["Admin","Employee"],"mappings":";;;;;;eAAe;AACbA,EAAAA,KAAK,EAAE,OADM;AAEbC,EAAAA,QAAQ,EAAE;AAFG,C","sourcesContent":["export default {\r\n  Admin: 'ADMIN',\r\n  Employee: 'EMPLOYEE',\r\n};"],"file":"rolesConfig.js"}

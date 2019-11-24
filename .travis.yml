@@ -1,0 +1,31 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  directories:
+    - "node_modules"
+install:
+  - npm install
+services:
+  - postgresql
+
+env:
+  global:
+  - NODE_ENV=test
+  - DB_USER_TEST=utpwsugatpqjzn
+  - DB_PASSWORD_TEST=03120a462667a671da3979385da1b5650ab8082d1319630013ec707eb7338ca5
+  - DB_HOST_TEST=ec2-54-225-173-42.compute-1.amazonaws.com
+  - DB_PORT_TEST=5432
+  - DB_DATABASE_TEST=ddo2ssbhau003c
+  - CLOUDINARY_CLOUD_NAME=mukuna
+  - CLOUDINARY_API_KEY=133265748257957
+  - CLOUDINARY_API_SECRET=uXZx1YbXcdEK6yhcgXs1VxAHkUE
+  
+  - SECRET=teamwork-api-secret-key
+
+before_script:
+  - npm run build
+script:
+  - npm test
+after_success:
+  - npm run coverage
