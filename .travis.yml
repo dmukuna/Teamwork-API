@@ -12,11 +12,12 @@ services:
 env:
   global:
   - NODE_ENV=test
-  - DB_USER_test=utpwsugatpqjzn
-  - DB_PASSWORD_test=03120a462667a671da3979385da1b5650ab8082d1319630013ec707eb7338ca5
-  - DB_HOST_test=ec2-54-225-173-42.compute-1.amazonaws.com
-  - DB_PORT_test=5432
-  - DB_DATABASE_test=ddo2ssbhau003c
+  - DB_USER_TEST=utpwsugatpqjzn
+  - DB_PASSWORD_TEST=03120a462667a671da3979385da1b5650ab8082d1319630013ec707eb7338ca5
+  - DB_HOST_TEST=ec2-54-225-173-42.compute-1.amazonaws.com
+  - DB_PORT_TEST=5432
+  - DB_DATABASE_TEST=ddo2ssbhau003c
+  
   - SECRET=teamwork-api-secret-key
 
 before_script:
