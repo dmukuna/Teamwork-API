@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { signUp, login } from '../controllers/user';
 import auth from '../middleware/auth';
-import Role from '../../../config/rolesConfig';
+import Role from '../config/rolesConfig';
 
 const router = Router();
 

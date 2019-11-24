@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import http from 'http';
 import dotenv from 'dotenv';
-import app from './api/v1/app';
+import app from './app';
 
 dotenv.config();
 
@@ -16,7 +16,9 @@ const normalizePort = (val) => {
   }
   return false;
 };
-const port = normalizePort(process.env.PORT || '3000');
+
+const port = normalizePort(process.env.PORT || '3000');;
+
 app.set('port', port);
 
 const server = http.createServer(app);
@@ -49,3 +51,5 @@ server.on('listening', () => {
 });
 
 server.listen(port);
+
+export default server;

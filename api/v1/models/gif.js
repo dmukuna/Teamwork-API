@@ -25,7 +25,7 @@ const Gif = {
 
   saveGif(values) {
     const queryText = `INSERT INTO
-      gifs (ID, title, gifURL, gifPublicId, createdOn, authorID)
+      gifs (id, title, gifurl, gifpublicid, createdon, authorid)
       VALUES ($1, $2, $3, $4, $5, $6)`;
     return query(queryText, values);
   },
@@ -38,6 +38,16 @@ const Gif = {
         throw err;
       });
     return row;
+  },
+
+  deleteAllGifs() {
+    const queryText = 'DELETE FROM gifs RETURNING *';
+    const rows = query(queryText, [])
+      .then((res) => res.rows)
+      .catch((err) => {
+        throw err;
+      });
+    return rows;    
   },
 };
 

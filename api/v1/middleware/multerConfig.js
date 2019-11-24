@@ -1,6 +1,6 @@
 import multer from 'multer';
 import cloudinaryStorage from 'multer-storage-cloudinary';
-import cld from '../../../config/cloudinaryConfig';
+import cld from '../config/cloudinaryConfig';
 
 const storage = cloudinaryStorage(
   {

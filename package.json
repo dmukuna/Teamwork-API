@@ -4,14 +4,15 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --exec babel-node server.js",
-    "dev_win": "set NODE_ENV=development&&npm start",
-    "dev_unix": "NODE_ENV=development npm start",
-    "prod_win": "set NODE_ENV=production&&npm start",
-    "prod_unix": "NODE_ENV=production npm start",
-    "test": "set NODE_ENV=test&&npm run start_test",
-    "start_test": "nyc mocha  --require @babel/register",
-    "build": "rm -rf ./build && babel -d ./build ./v1/api -s"
+    "start": "npm run prod_server && node ./build/server.js",
+    "prod_server": "set NODE_ENV=production&&npm run build",
+
+    "dev": "set NODE_ENV=development&&npm run dev_server",
+    "dev_server": "nodemon --exec babel-node ./api/v1/server.js",
+
+    "test": "mocha  --require @babel/register ./api/v1/test --timeout 30000 --exit",
+    "build": "rm -rf ./build && babel -d ./build ./api/v1 -s",
+    "coverage": "nyc npm run test"
   },
   "repository": {
     "type": "git",

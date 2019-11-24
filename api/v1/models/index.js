@@ -1,4 +1,4 @@
-import pool from '../../../config/dbConfig';
+import pool from '../config/dbConfig';
 
 pool.connect();
 
