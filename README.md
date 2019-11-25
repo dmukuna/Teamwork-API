@@ -42,49 +42,46 @@ To run tests, run: `npm  run coverage`
 
   ##### Define production database connnection URI
 
-    DATABASE_URL
+    * DATABASE_URL
 
   #### Define development database properties
 
-    DB_USER
-
-    DB_PASSWORD
-
-    DB_HOST
-
-    DB_PORT
-
-    DB_DATABASE
+    * DB_USER
+    * DB_PASSWORD
+    * DB_HOST
+    * DB_PORT
+    * DB_DATABASE
 
   ##### Define testing database properties
 
-    DB_USER_TEST
-
-    DB_PASSWORD_TEST
-
-    DB_HOST_TEST
-
-    DB_PORT_TEST
-
-    DB_DATABASE_TEST
+    * DB_USER_TEST
+    * DB_PASSWORD_TEST
+    * DB_HOST_TEST
+    * DB_PORT_TEST
+    * DB_DATABASE_TEST
 
   #### Define JWT encryption key
 
-    SECRET
+    * SECRET
 
   #### Define cloudinary service to facilitate file uploads
 
-    CLOUDINARY_CLOUD_NAME
+    * CLOUDINARY_CLOUD_NAME
 
-    CLOUDINARY_API_KEY
+    * CLOUDINARY_API_KEY
 
-    CLOUDINARY_API_SECRET
+    * CLOUDINARY_API_SECRET
 
 ## Deployment:
 
 The application has been hosted on heroku. Below, is the link to the application
 
 [Teamwork-API](https://teamwork-api2.herokuapp.com/)
+
+  Admin login details: 
+
+    email: daniel@mukuna.com
+    password: DANIEL12345
 
 ## Endpoints
 
