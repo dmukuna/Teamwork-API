@@ -67,9 +67,7 @@ To run tests, run: `npm  run coverage`
   #### Define cloudinary service to facilitate file uploads
 
     * CLOUDINARY_CLOUD_NAME
-
     * CLOUDINARY_API_KEY
-
     * CLOUDINARY_API_SECRET
 
 ## Deployment:
