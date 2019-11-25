@@ -40,7 +40,7 @@ To run tests, run: `npm  run coverage`
 - Create a .env in the application's root folder
 - Define the following environment variables in the .env file: 
 
-  ##### Define production database connnection URI
+  #### Define production database connnection URI
 
     * DATABASE_URL
 
@@ -52,7 +52,7 @@ To run tests, run: `npm  run coverage`
     * DB_PORT
     * DB_DATABASE
 
-  ##### Define testing database properties
+  #### Define testing database properties
 
     * DB_USER_TEST
     * DB_PASSWORD_TEST
@@ -94,9 +94,9 @@ The application has been hosted on heroku. Below, is the link to the application
 | DELETE  /api/v1/articles/:articleId        | Delete a specified article            |
 | POST  /api/v1/gifs                         | Post a gif image post                 |
 | GET  /api/v1/gifs                          | Fetch all gif image posts             |
-| GET  /api/v1/gifs/gifId                    | Fetch specified gif image post        |
-| DELETE  /api/v1/gifs/gifId                 | Delete specified gif image post       |
-| POST  /api/v1/gifs/gifId/comments          | Post a gif image post comment         |
+| GET  /api/v1/gifs/:gifId                   | Fetch specified gif image post        |
+| DELETE  /api/v1/gifs/:gifId                | Delete specified gif image post       |
+| POST  /api/v1/gifs/:gifId/comments         | Post a gif image post comment         |
 | POST  /api/v1/articles/:articleId/comments | Post an article comment               |
 | GET  /api/v1/feed                          | Fetch all posts                       |
 
